@@ -1,40 +1,59 @@
 push
 move
-250 250 0
-sphere
-0 100 0 50
-sphere
-0 -100 0 50
-rotate
-x 90
-torus
-0 0 0 50 200
-push
-move
--100 100 0
-sphere
-0 0 0 50
-sphere
-0 -200 0 50
-push
-move
-200 0 0
-sphere
-0 0 0 50
-sphere
-0 -200 0 50
-push
-move
--100 -100
-rotate
-z 90
-rotate
-x 45
-torus
-0 0 0 25 120
+125 250 0
 push
 rotate
 x 90
+rotate
+z 30
 torus
-0 0 0 25 120
-display
+0 0 0 10 100
+torus
+0 0 0 10 90
+torus
+0 0 0 10 80
+torus
+0 0 0 10 70
+torus
+0 0 0 10 60
+torus
+0 0 0 10 50
+torus
+0 0 0 10 40
+torus
+0 0 0 10 30
+sphere
+0 0 0 20
+push
+rotate
+x 160
+torus
+0 0 -100 10 100
+pop
+move
+250 0 0
+torus
+0 0 0 10 100
+torus
+0 0 0 10 90
+torus
+0 0 0 10 80
+torus
+0 0 0 10 70
+torus
+0 0 0 10 60
+torus
+0 0 0 10 50
+torus
+0 0 0 10 40
+torus
+0 0 0 10 30
+sphere
+0 0 0 20
+push
+rotate
+x 160
+torus
+0 0 -100 10 100
+save
+nipple.png
