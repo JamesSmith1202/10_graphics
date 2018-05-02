@@ -9,6 +9,7 @@
 //lighting functions
 color get_lighting( double *normal, double *view, color alight, double light[2][3], double *areflect, double *dreflect, double *sreflect) {
   color i;
+  normalize(light[LOCATION]);
   normalize(normal);
   normalize(view);
   color ambient = calculate_ambient(alight, areflect);
@@ -23,18 +24,18 @@ color get_lighting( double *normal, double *view, color alight, double light[2][
 
 color calculate_ambient(color alight, double *areflect ) {
   color a;
-  a.red = alight.red * (*areflect);
-  a.green = alight.green * (*areflect);
-  a.blue = alight.blue * (*areflect);
+  a.red = alight.red * areflect[0];
+  a.green = alight.green * areflect[1];
+  a.blue = alight.blue * areflect[2];
   return a;
 }
 
 color calculate_diffuse(double light[2][3], double *dreflect, double *normal ) {
   color d;
-  double diffuse_constant = (*dreflect) * dot_product(normal, light[LOCATION]);
-  d.red = light[COLOR][RED] * diffuse_constant;
-  d.green = light[COLOR][GREEN] * diffuse_constant;
-  d.blue = light[COLOR][BLUE] * diffuse_constant;
+  double dp = dot_product(normal, light[LOCATION]);
+  d.red = light[COLOR][RED] * dp * dreflect[0];
+  d.green = light[COLOR][GREEN] * dp * dreflect[1];
+  d.blue = light[COLOR][BLUE] * dp * dreflect[2];
   return d;
 }
 
@@ -48,10 +49,12 @@ color calculate_specular(double light[2][3], double *sreflect, double *view, dou
   r[0] -= light[LOCATION][0];
   r[1] -= light[LOCATION][1];
   r[2] -= light[LOCATION][2];
-  double spec_const = (*sreflect) * pow(dot_product(view, r), SPECULAR_EXP);
-  s.red = light[COLOR][RED] * spec_const;
-  s.green = light[COLOR][GREEN] * spec_const;
-  s.blue = light[COLOR][BLUE] * spec_const;
+  double dp = dot_product(view, r);
+  dp = dp > 0 ? dp : 0;
+  dp = pow(dp, SPECULAR_EXP);
+  s.red = light[COLOR][RED] * dp * sreflect[0];
+  s.green = light[COLOR][GREEN] * dp * sreflect[1];
+  s.blue = light[COLOR][BLUE] * dp * sreflect[2];
   return s;
 }
 
@@ -61,6 +64,9 @@ void limit_color( color * c ) {
   c->red = c->red > 255 ? 255 : c->red;
   c->green = c->green > 255 ? 255 : c->green;
   c->blue = c->blue > 255 ? 255 : c->blue;
+  c->red = c->red < 0 ? 0 : c->red;
+  c->green = c->green < 0 ? 0 : c->green;
+  c->blue = c->blue < 0 ? 0 : c->blue;
 }
 
 //vector functions
